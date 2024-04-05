@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+ <!--<img src="#">--> 
+  <div class="div"></div>
+  <script>
+    const img = document.querySelector('img')
+    const div = document.querySelector('.div')
+    const teamNamesList = []
+    // fetch('https://api.giphy.com/v1/gifs/translate?api_key=1Pz6w4J78JlgdK6TXwU32LKk9t2LHmHp&s=cats', {mode: 'cors'})
+    // .then(function(response) {
+    //   return response.json()
+    // })
+    // .then(function(response) {
+    //     img.src = response.data.images.original.url
+    // })
+for(let i = 1; i < 100; i++) {
+    fetch(`https://api.openf1.org/v1/drivers?driver_number=${i}&session_key=9158`, {mode: 'cors'})
+    .then(function(response) {
+        if (!response.ok) {
+            throw new Error('Network response was not ok')
+        }
+        return response.json()
+    })
+    .then(function(data) {
+        if (data.length > 0) {
+        var teamName = data[0]['team_name']
+        teamNamesList.push(teamName)
+        console.log(teamNamesList)
+        }
+
+        if (i === 99) {
+                teamNamesList.forEach(function(element) {
+                    console.log(element)
+                    var p = document.createElement("p")
+                    p.textContent = element
+                    div.appendChild(p)
+                })}
+    })
+    .catch(error => console.error('Error fetching the data: ', error))
+}
+  </script>
+</body>
+</html>
